@@ -1,3 +1,10 @@
+/*
+*
+*Autor: Joao Carlos Goncalves de Oliveira Filho
+*Matricula: 232009511
+*
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -20,7 +27,6 @@ const map<string,double> DIGRAFOS = {
  */
 double calculaScore(string &texto) {
     map<string,int> contagem;
-   
     // faz a contagem de trigrafos e digrafos presentes no texto
     for(int i = 0; i < texto.length() - 1; i++) {
         if(i < texto.length() - 2) {
@@ -30,7 +36,6 @@ double calculaScore(string &texto) {
         string digrafo = texto.substr(i, 2);
         contagem[digrafo]++;
     }
-   
     // incrementa o score baseando-se na frequencia conhecida
     double score = 0;
     for(auto &[trigrafo, freq] : TRIGRAFOS) {
@@ -55,30 +60,25 @@ double calculaScore(string &texto) {
 vector<pair<string,pair<double,vector<int>>>> ataqueFrequencia(string mensagem_criptografada, int TAM_CHAVE) {
     vector<int> permutacao(TAM_CHAVE);
     vector<pair<string,pair<double,vector<int>>>> possibilidades;
-    
     // inicializa vetor de perm (1, 2, 3, 4 ... N)
     for(int i = 0; i < TAM_CHAVE; i++) {
         permutacao[i] = i + 1;
     }
-    
     // testa todas as permutacoes possiveis do vetor 
     do {
         int colunas = TAM_CHAVE;
         int linhas = mensagem_criptografada.length() / colunas;
-    
         // reconstroi a ordem original das colunas
         vector<int> ordem_original(colunas);
         for(int i = 0; i < colunas; i++) {
             ordem_original[permutacao[i] - 1] = i;
         }
-    
         // extrai blocos de cada coluna 
         vector<string> blocos(colunas);
         for(int i = 0; i < colunas; i++) {
             int inicio = ordem_original[i] * linhas;
             blocos[i] = mensagem_criptografada.substr(inicio, linhas);
         }
-    
         // cout << "DEBUG\n";
         // for(auto &x : blocos) cout << x << '\n';
         // cout << '\n';
@@ -96,11 +96,9 @@ vector<pair<string,pair<double,vector<int>>>> ataqueFrequencia(string mensagem_c
         possibilidades.push_back({mensagem_decifrada, {score, permutacao}});
     
     } while(next_permutation(begin(permutacao), end(permutacao)));
-    
     sort(begin(possibilidades), end(possibilidades), [&](auto a, auto b) {
        return a.second.first > b.second.first;
     });
-    
     return possibilidades;
 }
 
@@ -130,7 +128,6 @@ string codificaTransposicao(string mensagem, string chave) {
     int colunas = chave.size();
     vector<vector<char>> matriz(linhas, vector<char> (colunas));
     int indice = 0;
-
     // preenche a matriz com a mensagem original (as sobras completam com X).
     for(int i = 0; i < linhas; i++) {
         for(int j = 0; j < colunas; j++) {
@@ -141,7 +138,6 @@ string codificaTransposicao(string mensagem, string chave) {
             }
         }
     }
-
     // extrai as colunas e reordena com base nos indices da chave
     string mensagem_codificada = "";
     vector<string> auxiliar;
@@ -152,13 +148,11 @@ string codificaTransposicao(string mensagem, string chave) {
         }
         auxiliar.push_back(aux);
     }
-
     vector<pair<char, int>> permutacao = geraPermutacao(chave);
     //debug for(auto &x : permutacao) cout << x.second << ' '; cout << '\n';
     for(int i = 0; i < colunas; i++) {
         mensagem_codificada += auxiliar[permutacao[i].second - 1];
     }
-
     return mensagem_codificada;
 }
 
@@ -173,12 +167,10 @@ string decodificaTransposicao(string mensagem_criptografada, string chave) {
     int linhas = mensagem_criptografada.length() / colunas;
     vector<pair<char,int>> colunas_ordenadas = geraPermutacao(chave);
     vector<int> ordem_original(colunas);
-
     // recuperando ordem das colunas a partir da chave
     for(int i = 0; i < colunas; i++) {
         ordem_original[colunas_ordenadas[i].second - 1] = i;
     }
-
     // recuperando blocos a partir de cada coluna 
     vector<string> blocos(colunas);
     for(int i = 0; i < colunas; i++) {
@@ -197,10 +189,8 @@ string decodificaTransposicao(string mensagem_criptografada, string chave) {
             }
         }
     }
-
     return mensagem_decifrada;
 }
-
 
 /**
  * @brief funcao de ataque por forca bruta em cifra de transposicao.

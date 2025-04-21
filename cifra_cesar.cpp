@@ -1,3 +1,10 @@
+/*
+*
+*Autor: Joao Carlos Goncalves de Oliveira Filho
+*Matricula: 232009511
+*
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -11,31 +18,46 @@ const map<char,double> DIST = {
     {'z', 0.4}
 };
 
+/**
+ * @brief calcula a frequencia de cada letra em um texto
+ * @param texto texto a ser analisado
+ * @return mapa com a frequencia de cada letra em porcentagem
+ */
 map<char,double> calcularFrequencias(string &texto) {
     map<char, double> freq;
     int total_letras = 0;
+    // conta a ocorrencia de cada letra
     for(char &c : texto) {
         if(isalpha(c)) {
             freq[tolower(c)]++;
             total_letras++;
         }
     }
+    // converte para porcentagem
     for(auto &[letra, count] : freq) {
         freq[letra] = (count / total_letras) * 100;
     }
     return freq;
 }
 
+/**
+ * @brief encontra a chave mais provavel usando analise de frequencia
+ * @param cifrado texto cifrado
+ * @return chave mais provavel (deslocamento)
+ */
 int encontrarChavePorFrequencia(string &cifrado) {
     map<char,double> frequencia_cifrado = calcularFrequencias(cifrado);
     int melhor_chave = 0;
     double menor_erro = INFINITY;
+    // testa todas as chaves possiveis (1 a 25)
     for(int K = 1; K < 26; K++) {
         double erro_total = 0;
+        // calcula o erro para cada letra
         for(auto &[letra, freq_esperada] : DIST) {
             char letra_cifrada = (letra - 'a' + K) % 26 + 'a';
             erro_total += abs(frequencia_cifrado[letra_cifrada] - freq_esperada);
-        }
+        }   
+        //  escolhe a melhor chave ate agora
         if(erro_total < menor_erro) {
             menor_erro = erro_total;
             melhor_chave = K;
@@ -44,8 +66,15 @@ int encontrarChavePorFrequencia(string &cifrado) {
     return melhor_chave;
 }
 
+/**
+ * @brief decodifica um texto usando cifra de cesar
+ * @param mensagem_criptografada texto cifrado
+ * @param CHAVE chave de deslocamento
+ * @return texto decifrado
+ */
 string decodificaCifraCesar(string &mensagem_criptografada, int CHAVE) {
     string resultado = mensagem_criptografada;
+    // aplica o deslocamento inverso para cada letra
     for(char &c : resultado) {
         if(isalpha(c)) {
             char base = islower(c) ? 'a' : 'A';
@@ -55,8 +84,15 @@ string decodificaCifraCesar(string &mensagem_criptografada, int CHAVE) {
     return resultado;
 }
 
+/**
+ * @brief codifica um texto usando cifra de cesar
+ * @param mensagem texto original
+ * @param CHAVE chave de deslocamento
+ * @return texto cifrado
+ */
 string codificaCifraCesar(string &mensagem, int CHAVE) {
     string mensagem_criptografada = mensagem;
+    // aplica o deslocamento para cada letra
     for(char &c : mensagem_criptografada) {
         if(isalpha(c)) {
             char base = islower(c) ? 'a' : 'A'; 
@@ -66,10 +102,17 @@ string codificaCifraCesar(string &mensagem, int CHAVE) {
     return mensagem_criptografada;
 }
 
+/**
+ * @brief realiza ataque por forca bruta na cifra por deslocamento
+ * @param alvo texto cifrado
+ * @return vetor com todas as possiveis decifracoes e suas chaves
+ */
 vector<pair<string,int>> ataqueForcaBruta(string &alvo) {
     vector<pair<string,int>> possibilidades;
+    // testa todas as chaves possiveis (1 a 25)
     for(int K = 1; K < 26; K++) {
-        string mensagem_auxiliar = alvo;
+        string mensagem_auxiliar = alvo;    
+        // decifra com a chave atual
         for(char &c : mensagem_auxiliar) {
             if(isalpha(c)) {
                 char base = islower(c) ? 'a' : 'A';
@@ -81,9 +124,13 @@ vector<pair<string,int>> ataqueForcaBruta(string &alvo) {
     return possibilidades;
 }
 
+/**
+ * @brief exibe os resultados de um ataque por forca bruta
+ * @param possibilidades vetor de possiveis decifracoes
+ */
 void geraResultadosForcaBruta(vector<pair<string,int>> possibilidades) {
     for(auto &[mensagem, chave] : possibilidades) {
-        cout << "Resultado : " << mensagem << " \n \n | " << " Chave utilizada (K) : " << chave << '\n';
+        cout << "resultado : " << mensagem << " \n \n | " << " chave utilizada (k) : " << chave << '\n';
         cout << '\n';
     }
 }
