@@ -11,7 +11,7 @@ void LIMPA() {
     #endif
 }
 void PAUSA() {
-    cout << "\nPressione Enter para continuar...";
+    cout << "\nPressione Enter para continuar...\n";
     cin.ignore(); cin.get();
 }
 string LER_ARQUIVO() {
