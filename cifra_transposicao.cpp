@@ -12,13 +12,13 @@ using namespace std;
 //     return retorno;
 // }
 
-const map<string,double> TRIGRAFOS = {
+map<string,double> TRIGRAFOS = {
     {"que", 72.29}, {"ent", 70.23}, {"nte", 55.08}, {"ado", 51.16},
     {"ade", 50.04}, {"ode", 45.43}, {"ara", 45.37}, {"est", 43.90},
-    {"res", 43.08}, {"con", 41.73}, 
+    {"res", 43.08}, {"con", 41.73}
 };
 
-const map<string,double> DIGRAFOS = {
+map<string,double> DIGRAFOS = {
     {"de", 3.25}, {"es", 2.89}, {"en", 2.59}, {"nt", 2.44},
     {"te", 2.38}, {"er", 2.28}, {"el", 2.05}, {"ra", 1.98}
 };
@@ -60,12 +60,19 @@ vector<pair<string,pair<double,vector<int>>>> ataqueFrequencia(string mensagem_c
         for(int i = 0; i < colunas; i++) {
             ordem_original[permutacao[i] - 1] = i;
         }
+        vector<string> blocos(colunas);
+        for(int i = 0; i < colunas; i++) {
+            int inicio = ordem_original[i] * linhas;
+            blocos[i] = mensagem_criptografada.substr(inicio, linhas);
+        }
+        // cout << "DEBUG\n";
+        // for(auto &x : blocos) cout << x << '\n';
+        // cout << '\n';
         string mensagem_decifrada;
         for(int i = 0; i < linhas; i++) {
-            for(int &j : ordem_original) {
-                int pos = j  * linhas + i;
-                if(pos < mensagem_criptografada.size()) {
-                    mensagem_decifrada += mensagem_criptografada[pos];
+            for(int j = 0; j < colunas; j++) {
+                if(i < blocos[j].size()) {
+                    mensagem_decifrada += blocos[j][i];
                 }
             }
         }
@@ -77,6 +84,7 @@ vector<pair<string,pair<double,vector<int>>>> ataqueFrequencia(string mensagem_c
     });
     return possibilidades;
 }
+
 
 vector<pair<char,int>> geraPermutacao(string &chave) {
     vector<pair<char,int>> contagem;
@@ -112,7 +120,7 @@ string codificaTransposicao(string mensagem, string chave) {
         auxiliar.push_back(aux);
     }
     vector<pair<char, int>> permutacao = geraPermutacao(chave);
-    //debug for(auto &x : permutacao) cout << x.second << ' '; cout << '\n';
+    for(auto &x : permutacao) cout << x.second << ' '; cout << '\n';
     for(int i = 0; i < colunas; i++) {
         mensagem_codificada += auxiliar[permutacao[i].second - 1];
     }
@@ -127,12 +135,19 @@ string decodificaTransposicao(string mensagem_criptografada, string chave) {
     for(int i = 0; i < colunas; i++) {
         ordem_original[colunas_ordenadas[i].second - 1] = i;
     }
+    vector<string> blocos(colunas);
+    for(int i = 0; i < colunas; i++) {
+        int inicio = ordem_original[i] * linhas;
+        blocos[i] = mensagem_criptografada.substr(inicio, linhas);
+    }
+    // cout << "DEBUG\n";
+    // for(auto &x : blocos) cout << x << '\n';
+    // cout << '\n';
     string mensagem_decifrada;
     for(int i = 0; i < linhas; i++) {
-        for(int &j : ordem_original) {
-            int pos = j  * linhas + i;
-            if(pos < mensagem_criptografada.size()) {
-                mensagem_decifrada += mensagem_criptografada[pos];
+        for(int j = 0; j < colunas; j++) {
+            if(i < blocos[j].size()) {
+                mensagem_decifrada += blocos[j][i];
             }
         }
     }

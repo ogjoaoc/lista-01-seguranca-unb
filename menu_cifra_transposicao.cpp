@@ -23,7 +23,7 @@ string LER_ARQUIVO() {
 void AVISO() {
     LIMPA();
     cout << "ATENCAO:\n";
-    cout << "O texto salvo no arquivo input.txt sera utilizado para as seguintes operacoes.\n";
+    cout << "O texto salvo no arquivo input2.txt sera utilizado para as seguintes operacoes.\n";
     cout << "Caso deseje alterar o plaintext, faca isso antes de prosseguir.";
     PAUSA();
 }
@@ -44,9 +44,10 @@ void DECRIPTOGRAFAR() {
     string chave;
     cout << "Digite a chave utilizada: ";
     cin >> chave;
+    // debug cerr << "chave lida = " << chave << '\n';
     string decifrado = decodificaTransposicao(mensagem, chave);
     cout << '\n';
-    cout << "\nMensagem descriptografada:\n";
+    cout << "\nMensagem descriptografada:\n\n";
     cout << decifrado << '\n';
 }
 void BRUTEFORCE() {
@@ -68,7 +69,7 @@ void DISFREQ() {
     vector<pair<string,pair<double,vector<int>>>> resultado = ataqueFrequencia(mensagem, tamanho);
     cout << '\n';
     cout << "\nMelhor score pela analise: " << resultado[0].second.first << '\n';
-    cout << "Mensagem decifrada:\n";
+    cout << "Mensagem decifrada:\n\n";
     cout << resultado[0].first << '\n';
     cout << "\nPermutacao utilizada : ";
     for(int &i : resultado[0].second.second) {
