@@ -8,11 +8,13 @@ Repositório para implementação e análise das cifras clássicas de César e T
 - Codificação/decodificação com deslocamento fixo
 - Ataque por força bruta testando todas as 26 chaves possíveis
 - Ataque por análise de distribuição de frequência de letras
-
+- Chave padrão pro exemplo em input.txt - 3
+  
 ### Cifra de Transposição
 - Codificação/decodificação colunar com permutação de colunas
 - Ataque por força bruta testando permutações de colunas
-- Ataque por análise de frequência de digramas e trigramas  
+- Ataque por análise de frequência de digramas e trigramas
+- Chave padrão pro exemplo em input2.txt - GAME
 
 ## Como Compilar e Executar
 
