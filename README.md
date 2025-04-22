@@ -12,7 +12,7 @@ Repositório para implementação e análise das cifras clássicas de César e T
 ### Cifra de Transposição
 - Codificação/decodificação colunar com permutação de colunas
 - Ataque por força bruta testando permutações de colunas
-- Ataque por análise de frequência de digramas e trigramas  |
+- Ataque por análise de frequência de digramas e trigramas  
 
 ## Como Compilar e Executar
 
