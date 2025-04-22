@@ -17,13 +17,14 @@ Repositório para implementação e análise das cifras clássicas de César e T
 - Chave padrão pro exemplo em input2.txt - GAME
 
 ## Como Compilar e Executar
-
+```
 g++ menu_cifra_cesar.cpp -o run_cesar.out
 g++ menu_cifra_transposicao.cpp -o run_transposicao.out
-
+```
 2. Execute os programas:
+```
 ./run_cesar.out
 ./run_transposicao.out
-
+```
 ## Dependências
 - Compilador C++ (g++ recomendado)
