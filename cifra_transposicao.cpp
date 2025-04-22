@@ -73,9 +73,6 @@ vector<pair<string,pair<double,vector<int>>>> ataqueFrequencia(string mensagem_c
             int inicio = ordem_original[i] * linhas;
             blocos[i] = mensagem_criptografada.substr(inicio, linhas);
         }
-        // cout << "DEBUG\n";
-        // for(auto &x : blocos) cout << x << '\n';
-        // cout << '\n';
         string mensagem_decifrada;
         for(int i = 0; i < linhas; i++) {
             for(int j = 0; j < colunas; j++) {
@@ -162,9 +159,6 @@ string decodificaTransposicao(string mensagem_criptografada, string chave) {
         int inicio = ordem_original[i] * linhas;
         blocos[i] = mensagem_criptografada.substr(inicio, linhas);
     }
-    // cout << "DEBUG\n";
-    // for(auto &x : blocos) cout << x << '\n';
-    // cout << '\n';
     string mensagem_decifrada;
     for(int i = 0; i < linhas; i++) {
         for(int j = 0; j < colunas; j++) {
@@ -214,7 +208,7 @@ vector<pair<string,vector<int>>> ataqueForcaBruta(string mensagem_criptografada,
 }
 
 /**
- * @brief exibe os resultados de um ataque brute-force.
+ * @brief exibe os resultados de um ataque por forca bruta.
  * @param possibilidades vetor de possiveis decifracoes com suas permutacoes.
  */
 void geraResultadosForcaBruta(vector<pair<string,vector<int>>> possibilidades) {
