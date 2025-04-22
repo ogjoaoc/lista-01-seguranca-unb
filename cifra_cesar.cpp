@@ -26,14 +26,12 @@ const map<char,double> DIST = {
 map<char,double> calcularFrequencias(string &texto) {
     map<char, double> freq;
     int total_letras = 0;
-    // conta a ocorrencia de cada letra
     for(char &c : texto) {
         if(isalpha(c)) {
             freq[tolower(c)]++;
             total_letras++;
         }
     }
-    // converte para porcentagem
     for(auto &[letra, count] : freq) {
         freq[letra] = (count / total_letras) * 100;
     }
@@ -49,15 +47,12 @@ int encontrarChavePorFrequencia(string &cifrado) {
     map<char,double> frequencia_cifrado = calcularFrequencias(cifrado);
     int melhor_chave = 0;
     double menor_erro = INFINITY;
-    // testa todas as chaves possiveis (1 a 25)
     for(int K = 1; K < 26; K++) {
         double erro_total = 0;
-        // calcula o erro para cada letra
         for(auto &[letra, freq_esperada] : DIST) {
             char letra_cifrada = (letra - 'a' + K) % 26 + 'a';
             erro_total += abs(frequencia_cifrado[letra_cifrada] - freq_esperada);
         }   
-        //  escolhe a melhor chave ate agora
         if(erro_total < menor_erro) {
             menor_erro = erro_total;
             melhor_chave = K;
@@ -74,7 +69,6 @@ int encontrarChavePorFrequencia(string &cifrado) {
  */
 string decodificaCifraCesar(string &mensagem_criptografada, int CHAVE) {
     string resultado = mensagem_criptografada;
-    // aplica o deslocamento inverso para cada letra
     for(char &c : resultado) {
         if(isalpha(c)) {
             char base = islower(c) ? 'a' : 'A';
@@ -92,7 +86,6 @@ string decodificaCifraCesar(string &mensagem_criptografada, int CHAVE) {
  */
 string codificaCifraCesar(string &mensagem, int CHAVE) {
     string mensagem_criptografada = mensagem;
-    // aplica o deslocamento para cada letra
     for(char &c : mensagem_criptografada) {
         if(isalpha(c)) {
             char base = islower(c) ? 'a' : 'A'; 
@@ -109,10 +102,8 @@ string codificaCifraCesar(string &mensagem, int CHAVE) {
  */
 vector<pair<string,int>> ataqueForcaBruta(string &alvo) {
     vector<pair<string,int>> possibilidades;
-    // testa todas as chaves possiveis (1 a 25)
     for(int K = 1; K < 26; K++) {
         string mensagem_auxiliar = alvo;    
-        // decifra com a chave atual
         for(char &c : mensagem_auxiliar) {
             if(isalpha(c)) {
                 char base = islower(c) ? 'a' : 'A';
